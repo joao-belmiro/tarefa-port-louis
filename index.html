@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/6e39cfe09e.js" crossorigin="anonymous"></script>
+    <title>Desafio Port Louis</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="card">
+            <div class="card-body">
+                <div class="row-title">
+                    <h5 class="card-title">Usuários Cadastrados</h5>
+                    <button type="button" class="btn btn-success" @click="showModal()">
+                        <i class="fas fa-plus"></i>
+                        <b>Novo Registro</b>
+                    </button>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Telefone</th>
+                            <th scope="col row-buttons">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="usuario in usuarios">
+                            <tr :class="{'fundoAzul': linhaAzul(usuario.telefone) === true}" :key="usuario.id">
+                                <td>{{ usuario.nome }}</td>
+                                <td>{{ formatPhone(usuario.telefone) }}</td>
+                                <td>
+                                    <div class="row-buttons">
+                                        <button class="btn btn-primary" style="margin-right: 6px"
+                                            @click="editar(usuario)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger" @click="excluir(usuario)">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            <i :class="icone"></i>
+                            {{titulo}}
+                        </h4>
+                        <button type="button" class="close" @click="limpar"><i class="fas fa-times"></i></button>
+                    </div>
+                    <form id="cadastro" @submit.prevent="salvar" @reset="limpar">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <b>Nome:</b>
+                                <input required v-model="usuario.nome" class="form-control" id="nomeUsuario"
+                                    placeholder="Digite o seu nome" required />
+                                <div class="invalid-feedback"> Mínino de 2 palavras com 3 letras cada</div>
+                            </div>
+                            <div class="form-group">
+                                <b>Telefone: </b>
+                                <input required maxlength="15" type="text" v-model="usuario.telefone"
+                                    class="form-control" id="telefoneUsuario" placeholder="Digite o telefone"
+                                    required
+                                    />
+                                <div class="invalid-feedback">Telefone com formato inválido</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="reset"> <i style="margin-right: 6px"
+                                    class="fas fa-times"></i> Cancelar</button>
+                            <button class="btn btn-success" type="submit"><i style="margin-right: 6px"
+                                    :class="icone"></i>{{label}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+            <div id="alerta" class="toast hide" style="color: white;background-color: #5cb85c;" role="alert"
+                aria-live="assertive" aria-atomic="true" data-delay="4000">
+                <div class="toast-header row-between" style="color: white;background-color: #5cb85c;">
+                    <i class="fas fa-check-circle" style="margin-right: 6px;"></i>
+                    <h6>
+                        Operação Realizada com Sucesso
+                    </h6>
+                    <button type="button" class="btn btn-white" data-dismiss="toast">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

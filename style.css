@@ -1,0 +1,38 @@
+html {
+    font-family:  Roboto;
+}
+#app {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+
+}
+.fundoAzul {
+    color: white;
+    border-radius: 6px !important;
+    background-color: #03bafc;
+}
+td {
+    font-weight: 500;
+}
+.row-title {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-between ;
+}
+.row-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.row-between {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-between ;
+}
+.toast-body{
+    padding: 8px !important;
+}
